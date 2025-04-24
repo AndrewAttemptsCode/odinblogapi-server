@@ -1,4 +1,5 @@
 const express = require('express');
+const routes = require('./routes');
 
 const app = express();
 
@@ -6,8 +7,8 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.json({ message: 'test 123' });
-})
+app.use('/users', routes.user);
+app.use('/posts', routes.post);
+app.use('/comments', routes.comment);
 
 module.exports = app;
