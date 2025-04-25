@@ -13,6 +13,22 @@ const getAllPosts = async (req, res) => {
   res.json({ posts });
 };
 
+const getPost = async (req, res) => {
+  const { postId } = req.params;
+
+  const post = await prisma.post.findUnique({
+    where: { id: Number(postId) },
+    include: {
+      author: {
+        select: {
+          username: true,
+        },
+      },
+    },
+  });
+  res.json({ post });
+}
+
 const createPost = async (req, res) => {
   const { title, text } = req.body;
   const authorId = 1; // when login set up, change to req.user.id
@@ -30,4 +46,5 @@ const createPost = async (req, res) => {
 module.exports = {
   getAllPosts,
   createPost,
+  getPost,
 };
