@@ -24,6 +24,15 @@ const getPost = async (req, res) => {
           username: true,
         },
       },
+      comments: {
+        include: {
+          author: {
+            select: {
+              username: true,
+            },
+          },
+        },
+      },
     },
   });
   res.json({ post });
@@ -63,9 +72,25 @@ const publishPost = async (req, res) => {
   res.json({ message: `Post ${updatedPost.published ? 'published' : 'unpublished'}`, post: updatedPost });
 };
 
+const createComment = async (req, res) => {
+  const { postId } = req.params;
+  const { text } = req.body;
+  const authorId = 1; // when login set up, change to req.user.id
+
+  const comment = await prisma.comment.create({
+    data: {
+      text,
+      postId: Number(postId),
+      authorId,
+    },
+  });
+  res.json({ message: 'Comment created', comment });
+};
+
 module.exports = {
   getAllPosts,
   createPost,
   getPost,
   publishPost,
+  createComment,
 };
