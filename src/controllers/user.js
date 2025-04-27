@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const prisma = require('../../config/prismaClient');
 const bcrypt = require('bcryptjs');
 
@@ -22,6 +23,12 @@ const getUser = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
+  const errors = validationResult(req);
+  
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const {username, password, email} = req.body;
 
   const hashedPassword = await bcrypt.hash(password, 10);
