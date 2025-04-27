@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const prisma = require('../../config/prismaClient');
 
 const getAllPosts = async (req, res) => {
@@ -73,6 +74,12 @@ const publishPost = async (req, res) => {
 };
 
 const createComment = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
   const { postId } = req.params;
   const { text } = req.body;
   const authorId = req.user.id;
