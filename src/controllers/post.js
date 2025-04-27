@@ -40,6 +40,12 @@ const getPost = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
   const { title, text } = req.body;
   const authorId = req.user.id;
 
@@ -79,7 +85,7 @@ const createComment = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  
+
   const { postId } = req.params;
   const { text } = req.body;
   const authorId = req.user.id;
