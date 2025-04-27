@@ -40,7 +40,7 @@ const getPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   const { title, text } = req.body;
-  const authorId = 1; // when login set up, change to req.user.id
+  const authorId = req.user.id;
 
   const post = await prisma.post.create({
     data: {
@@ -75,7 +75,7 @@ const publishPost = async (req, res) => {
 const createComment = async (req, res) => {
   const { postId } = req.params;
   const { text } = req.body;
-  const authorId = 1; // when login set up, change to req.user.id
+  const authorId = req.user.id;
 
   const comment = await prisma.comment.create({
     data: {
