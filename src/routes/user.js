@@ -11,7 +11,3 @@ router.post('/', registerValidation, controllers.user.createUser);
 router.get('/:userId', authenticateUser, authorizeAdmin, controllers.user.getUser);
 
 module.exports = router;
-
-// TODO
-// comment validation
-// post validation
