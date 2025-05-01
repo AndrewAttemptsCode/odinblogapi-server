@@ -17,6 +17,7 @@ const registerValidation = [
         }
         return true;
       } catch (error) {
+        if (error.message === 'Username already exists') throw error;
         throw new Error('Database query failed. Please try again later.')
       }
     }),
@@ -34,6 +35,7 @@ const registerValidation = [
         }
         return true;
       } catch (error) {
+        if (error.message === 'Email already exists') throw error;
         throw new Error('Database query failed. Please try again later.')
       }      
     }),
