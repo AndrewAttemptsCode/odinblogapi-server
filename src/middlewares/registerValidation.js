@@ -45,7 +45,7 @@ const registerValidation = [
   body('confirmPassword')
     .trim()
     .custom((confirmPassword, { req }) => {
-      if (confirmPassword !== req.body.password) {
+      if (confirmPassword !== req.body.password || confirmPassword === '') {
         throw new Error('Passswords do not match');
       }
       return true;
