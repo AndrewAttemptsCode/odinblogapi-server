@@ -6,7 +6,7 @@ const authenticateUser = (req, res, next) => {
       return res.status(401).json({
         errors: [{ 
           path: 'auth',
-          msg: 'You must be logged in to leave a comment.',
+          msg: 'You must be logged in.',
          }],
       });
     };
