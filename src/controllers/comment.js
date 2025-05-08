@@ -18,6 +18,20 @@ const getComments = async (req, res) => {
   res.json(comments);
 }
 
+const removeComment = async (req, res) => {
+  const { commentId } = req.params;
+  const comment = await prisma.comment.delete({
+    where: { id: Number(commentId) },
+  });
+
+  if (!comment) {
+    return res.status(404).json({ msg: 'No comment found' });
+  }
+
+  res.json({ msg: `Removed comment: ${comment}` });
+}
+
 module.exports = {
   getComments,
+  removeComment,
 }
